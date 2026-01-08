@@ -1,0 +1,152 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Portafolio de Análisis de Datos">
+    <meta name="description" content="Explora proyectos de análisis de datos, descubre mi experiencia y contáctame para colaboraciones.">
+    <meta name="keywords" content="análisis de datos, ciencia de datos, portafolio, visualización de datos, proyectos">
+    <meta name="author" content="Tu Nombre">
+    <title>Portafolio de Análisis de Datos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Análisis de Datos</div>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#projects">Proyectos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Explora el Poder de los Datos</h1>
+            <p>Descubre proyectos de análisis de datos que transforman información en decisiones. Explora mi trabajo o contáctame para colaborar.</p>
+            <a href="#projects" class="cta-button">Ver Proyectos</a>
+        </section>
+
+        <section id="about">
+            <h2>Sobre Mí</h2>
+            <div class="about-content">
+                <img src="placeholder.jpg" alt="Foto de perfil del analista de datos" class="profile-img">
+                <div class="bio">
+                    <p>Soy un apasionado analista de datos con experiencia en transformar datos complejos en soluciones prácticas. Mi enfoque combina habilidades técnicas y un pensamiento estratégico para ofrecer resultados impactantes. Me especializo en visualización de datos, modelado predictivo y automatización de procesos.</p>
+                    <h3>Experiencia Profesional</h3>
+                    <ul>
+                        <li>Analista de Datos Senior en Empresa XYZ (2020-2025)</li>
+                        <li>Desarrollo de dashboards interactivos con Python y Power BI</li>
+                        <li>Implementación de modelos predictivos para optimización de procesos</li>
+                        <li>Colaboración en proyectos de Big Data con SQL y Hadoop</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Proyectos</h2>
+            <div class="project-grid">
+                <article class="project-card">
+                    <h3>Análisis de Ventas Retail</h3>
+                    <p>Exploré tendencias de ventas en una cadena de retail, identificando patrones estacionales y optimizando inventarios. El proyecto mejoró la eficiencia operativa en un 15%.</p>
+                    <ul>
+                        <li>Tecnologías: Python, Pandas, Matplotlib</li>
+                        <li>Herramientas: Jupyter Notebook, SQL</li>
+                    </ul>
+                    <a href="#" class="project-link">Ver Repositorio</a>
+                </article>
+                <article class="project-card">
+                    <h3>Predicción de Churn de Clientes</h3>
+                    <p>Desarrollé un modelo de machine learning para predecir la rotación de clientes en una empresa de telecomunicaciones, logrando un 85% de precisión.</p>
+                    <ul>
+                        <li>Tecnologías: Python, Scikit-learn, Seaborn</li>
+                        <li>Herramientas: AWS, SQL</li>
+                    </ul>
+                    <a href="#" class="project-link">Ver Demo</a>
+                </article>
+                <article class="project-card">
+                    <h3>Visualización de Datos de Salud</h3>
+                    <p>Creé dashboards interactivos para visualizar métricas de salud pública, facilitando la toma de decisiones en una ONG.</p>
+                    <ul>
+                        <li>Tecnologías: Tableau, Python, R</li>
+                        <li>Herramientas: PostgreSQL</li>
+                    </ul>
+                    <a href="#" class="project-link">Ver Repositorio</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contacto</h2>
+            <form id="contact-form">
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+            <div class="social-links">
+                <a href="#" aria-label="LinkedIn"><img src="linkedin-icon.png" alt="Ícono de LinkedIn"></a>
+                <a href="#" aria-label="GitHub"><img src="github-icon.png" alt="Ícono de GitHub"></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tu Nombre. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
