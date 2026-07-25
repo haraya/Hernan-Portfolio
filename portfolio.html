@@ -3,294 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brittany Chiang — Portfolio</title>
+<link rel="icon" type="image/x-icon" href="img/icon.ico">
+<title>Hernan Araya L</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy: #121212;
-    --navy-light: #1c1c1c;
-    --navy-lighter: #2a2a2a;
-    --rail: #181818;
-    --slate: #8a8a8a;
-    --slate-light: #d4d4d4;
-    --teal: #4ec9b0;
-    --white: #ffffff;
-    --border: rgba(255,255,255,0.08);
-  }
-  *{box-sizing:border-box;}
-  html,body{height:100%;}
-  body{
-    margin:0;
-    background:var(--navy);
-    color:var(--slate);
-    font-family:'Inter',sans-serif;
-    overflow:hidden;
-  }
-  .app{
-    display:flex;
-    height:100vh;
-    width:100vw;
-  }
-
-  /* ===== ICON RAIL ===== */
-  .rail{
-    width:64px;
-    flex-shrink:0;
-    background:var(--rail);
-    border-right:1px solid var(--border);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding-top:18px;
-  }
-  .rail-logo{
-    width:42px;height:42px;
-    border-radius:11px;
-    overflow:hidden;
-    background:#f6f7f8;
-    border:2px solid var(--teal);
-    box-shadow:0 0 0 1px rgba(0,0,0,0.25), 0 2px 10px rgba(78,201,176,0.35);
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:28px;
-  }
-  .rail-logo img{
-    width:100%;height:100%;
-    object-fit:cover;
-  }
-  .rail-icons{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    flex:1;
-  }
-  .rail-btn{
-    width:48px;height:48px;
-    display:flex;align-items:center;justify-content:center;
-    background:none;border:none;
-    color:var(--slate);
-    position:relative;
-    cursor:pointer;
-    border-radius:8px;
-    transition:color .2s ease, background .2s ease;
-  }
-  .rail-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;transition:transform .2s ease;}
-  .rail-btn:hover{color:var(--white);}
-  .rail-btn:hover svg{transform:translateY(-1px);}
-  .rail-btn.active{color:var(--teal);}
-  .rail-btn.active::before{
-    content:"";
-    position:absolute;
-    left:-8px; top:8px; bottom:8px;
-    width:3px;
-    background:var(--teal);
-    border-radius:2px;
-  }
-  .rail-bottom{
-    display:flex;flex-direction:column;gap:4px;
-    padding-bottom:16px;
-  }
-  .rail-tooltip{
-    position:absolute;
-    left:60px;
-    background:var(--navy-lighter);
-    color:var(--white);
-    font-size:12px;
-    font-family:'JetBrains Mono',monospace;
-    padding:5px 10px;
-    border-radius:5px;
-    white-space:nowrap;
-    opacity:0;
-    pointer-events:none;
-    transform:translateX(-6px);
-    transition:opacity .15s ease, transform .15s ease;
-    z-index:10;
-    border:1px solid var(--border);
-  }
-  .rail-btn:hover .rail-tooltip{opacity:1; transform:translateX(0);}
-
-  /* ===== MAIN AREA ===== */
-  .main{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    min-width:0;
-  }
-
-  /* fake editor tab bar, reflects active section like an open file */
-  .tabbar{
-    height:38px;
-    background:var(--navy-light);
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:stretch;
-    flex-shrink:0;
-  }
-  .tab{
-    display:flex;align-items:center;gap:8px;
-    padding:0 16px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:12.5px;
-    color:var(--slate-light);
-    border-right:1px solid var(--border);
-    background:var(--navy);
-    position:relative;
-  }
-  .tab::before{
-    content:"";
-    position:absolute;
-    top:0;left:0;right:0;
-    height:2px;
-    background:var(--teal);
-  }
-  .tab .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex-shrink:0;}
-
-  .content{
-    flex:1;
-    overflow-y:auto;
-    padding:0;
-  }
-  .content::-webkit-scrollbar{width:10px;}
-  .content::-webkit-scrollbar-track{background:var(--navy);}
-  .content::-webkit-scrollbar-thumb{background:var(--navy-lighter);border-radius:6px;}
-
-  .panel{
-    display:none;
-    max-width:900px;
-    margin:0 auto;
-    padding:100px 40px 120px;
-    animation:fadeUp .45s ease;
-  }
-  .panel.show{display:block;}
-  @keyframes fadeUp{
-    from{opacity:0; transform:translateY(14px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-
-  .eyebrow{
-    color:var(--teal);
-    font-family:'JetBrains Mono',monospace;
-    font-size:15px;
-    margin-bottom:14px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .eyebrow::after{
-    content:"";
-    height:1px;
-    flex:0 0 60px;
-    background:var(--teal);
-    opacity:.5;
-  }
-  h1.page-title{
-    font-size:44px;
-    font-weight:800;
-    color:var(--white);
-    margin:0 0 6px;
-    letter-spacing:-1px;
-  }
-  h1.page-title span{color:var(--slate);}
-  p.lead{
-    max-width:600px;
-    font-size:17px;
-    line-height:1.7;
-    color:var(--slate);
-  }
-  .btn-teal{
-    margin-top:20px;
-    display:inline-block;
-    border:1px solid var(--teal);
-    color:var(--teal);
-    font-family:'JetBrains Mono',monospace;
-    font-size:13.5px;
-    padding:12px 22px;
-    border-radius:4px;
-    text-decoration:none;
-    transition:background .2s ease, transform .2s ease;
-  }
-  .btn-teal:hover{background:rgba(100,255,218,0.08); transform:translateY(-2px); color:var(--teal);}
-
-  /* numbered heading used for sections where sequence is real (experience timeline) */
-  .num-heading{
-    display:flex;align-items:center;gap:10px;
-    font-size:26px;font-weight:700;color:var(--white);
-    margin-bottom:36px;
-  }
-  .num-heading .n{color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:20px;}
-  .num-heading::after{content:"";flex:1;height:1px;background:var(--navy-lighter);margin-left:14px;}
-
-  /* Experience */
-  .exp-row{
-    display:flex;
-    gap:24px;
-    padding:22px 0;
-    border-bottom:1px solid var(--navy-lighter);
-  }
-  .exp-row:last-child{border-bottom:none;}
-  .exp-date{
-    width:130px;flex-shrink:0;
-    font-family:'JetBrains Mono',monospace;
-    font-size:12.5px;
-    color:var(--slate);
-    padding-top:3px;
-  }
-  .exp-role{color:var(--white); font-weight:600; font-size:16px; margin-bottom:4px;}
-  .exp-company{color:var(--teal); font-weight:500;}
-  .exp-desc{margin-top:8px; font-size:14.5px; line-height:1.7; color:var(--slate);}
-
-  /* Projects */
-  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
-  @media (max-width:700px){.proj-grid{grid-template-columns:1fr;}}
-  .proj-card{
-    background:var(--navy-light);
-    border:1px solid var(--border);
-    border-radius:6px;
-    padding:24px;
-    transition:transform .25s ease, border-color .25s ease;
-  }
-  .proj-card:hover{transform:translateY(-5px); border-color:var(--teal);}
-  .proj-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px;}
-  .proj-icon{color:var(--teal);}
-  .proj-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;}
-  .proj-links{display:flex; gap:12px; color:var(--slate-light);}
-  .proj-links svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6;}
-  .proj-title{color:var(--white); font-size:17.5px; font-weight:700; margin-bottom:10px;}
-  .proj-desc{font-size:14px; line-height:1.7; color:var(--slate);}
-  .proj-stack{
-    list-style:none; display:flex; flex-wrap:wrap; gap:10px 14px;
-    padding:0; margin:18px 0 0;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11.5px; color:var(--slate);
-  }
-
-  /* Contact */
-  .contact-wrap{text-align:center; padding-top:60px;}
-  .contact-wrap .eyebrow{justify-content:center;}
-  .contact-wrap .eyebrow::after{display:none;}
-  .contact-wrap h1{font-size:46px;}
-  .contact-wrap p.lead{margin:0 auto; text-align:center;}
-  .contact-links{
-    display:flex; justify-content:center; gap:22px; margin-top:36px;
-    font-family:'JetBrains Mono',monospace; font-size:13px;
-  }
-  .contact-links a{color:var(--slate-light); text-decoration:none; border-bottom:1px solid transparent;}
-  .contact-links a:hover{color:var(--teal); border-color:var(--teal);}
-
-  /* status bar bottom, VS Code flavor */
-  .statusbar{
-    height:24px;
-    background:var(--teal);
-    color:var(--navy);
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 14px;
-    flex-shrink:0;
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 
@@ -299,24 +16,29 @@
   <!-- ICON RAIL -->
   <nav class="rail">
     <div class="rail-logo">
-      <img src="img/logo.jpg" alt="HDesarrollo">
+      <img src="img/logo.jpg" alt="HDesarrollo" title="HDesarrollo">
     </div>
+
     <div class="rail-icons">
+     
 
       <button class="rail-btn active" data-target="about">
-        <svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+        <!--<svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>-->
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
         <span class="rail-tooltip">about.md</span>
+      </button>
+
+       <button class="rail-btn" data-target="work">
+        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <span class="rail-tooltip">experience.py</span>
       </button>
 
       <button class="rail-btn" data-target="experience">
         <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M6 9v12"/><circle cx="18" cy="18" r="3"/><path d="M18 6a9 9 0 0 1-9 9"/></svg>
-        <span class="rail-tooltip">experience.js</span>
+        <span class="rail-tooltip">projects.js</span>
       </button>
 
-      <button class="rail-btn" data-target="work">
-        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        <span class="rail-tooltip">work/</span>
-      </button>
+     
 
       <button class="rail-btn" data-target="contact">
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -327,7 +49,7 @@
     <div class="rail-bottom">
       <button class="rail-btn">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-        <span class="rail-tooltip">Brittany Chiang</span>
+        <span class="rail-tooltip">Hernán Araya</span>
       </button>
       <button class="rail-btn">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
@@ -348,7 +70,7 @@
       <!-- ABOUT -->
       <section class="panel show" id="panel-about">
         <div class="eyebrow">Hola, mi nombre es</div>
-        <h1 class="page-title">Brittany Chiang.</h1>
+        <h1 class="page-title">Hernán Araya.</h1>
         <h1 class="page-title"><span>Construyo cosas para la web.</span></h1>
         <p class="lead">
           Soy ingeniera de software especializada en construir (y ocasionalmente diseñar)
@@ -359,7 +81,7 @@
       </section>
 
       <!-- EXPERIENCE -->
-      <section class="panel" id="panel-experience">
+      <section class="panel" id="panel-work">
         <div class="num-heading"><span class="n">02.</span> Dónde he trabajado</div>
 
         <div class="exp-row">
@@ -388,7 +110,7 @@
       </section>
 
       <!-- WORK / PROJECTS -->
-      <section class="panel" id="panel-work">
+      <section class="panel" id="panel-experience">
         <div class="num-heading"><span class="n">03.</span> Algunas cosas que he construido</div>
 
         <div class="proj-grid">
@@ -477,34 +199,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script>
-  const buttons = document.querySelectorAll('.rail-btn[data-target]');
-  const panels = document.querySelectorAll('.panel');
-  const tabText = document.getElementById('tabText');
-  const statusText = document.getElementById('statusText');
-
-  const fileNames = {
-    about: 'about.md',
-    experience: 'experience.js',
-    work: 'work/index.tsx',
-    contact: 'contact.sh'
-  };
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.target;
-
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      panels.forEach(p => p.classList.remove('show'));
-      document.getElementById('panel-' + target).classList.add('show');
-
-      const name = fileNames[target];
-      tabText.textContent = name;
-      statusText.textContent = name + ' — Ln 1, Col 1';
-    });
-  });
-</script>
+<script src="script.js"> </script>
 </body>
 </html>

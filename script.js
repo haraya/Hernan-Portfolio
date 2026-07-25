@@ -7,7 +7,7 @@
   const fileNames = {
     about: 'about.md',
     experience: 'experience.js',
-    work: 'work/index.tsx',
+    work: 'work.py',
     contact: 'contact.sh'
   };
 
@@ -23,6 +23,6 @@
 
       const name = fileNames[target];
       tabText.textContent = name;
-      statusText.textContent = name + ' — Ln 1';
+      statusText.textContent = name + ' — Ln 1, Col 1';
     });
   });
