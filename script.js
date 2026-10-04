@@ -6,8 +6,8 @@
 
   const fileNames = {
     about: 'about.md',
-    experience: 'experience.js',
-    work: 'work.py',
+    work: 'experience.js',
+    experience: 'projects.py',
     contact: 'contact.sh'
   };
 
